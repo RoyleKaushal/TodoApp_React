@@ -1,21 +1,32 @@
-import { useReducer } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList/TodoList";
 import AddComponent from "./components/AddComponent/AddComponent";
 import { TodoContext } from "./context/TodoContext";
-import todoReducers from "./reducers/todoReducers";
 import { TodoDispatchContext } from "./context/TodoDispatchContext";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  addTodo,
+  deleteTodo,
+  editTodo,
+  finishedTodo,
+} from "./actions/todoActions";
 
 function App() {
-  const [list, dispatch] = useReducer(todoReducers, []);
-
+  const dispatch = useDispatch();
+  const actions = bindActionCreators(
+    { addTodo, deleteTodo, editTodo, finishedTodo },
+    dispatch
+  );
   return (
-    <TodoContext.Provider value={{ list }}>
-      <TodoDispatchContext.Provider value={{ dispatch }}>
-        <AddComponent />
-        <TodoList />
-      </TodoDispatchContext.Provider>
-    </TodoContext.Provider>
+    <>
+      <AddComponent addTodo={(text) => actions.addTodo(text)} />
+      <TodoList
+        editTodo={(id, text) => actions.editTodo(id, text)}
+        finishedTodo={(id, isFinished) => actions.finishedTodo(id, isFinished)}
+        deleteTodo={(id) => actions.deleteTodo(id)}
+      />
+    </>
   );
 }
 

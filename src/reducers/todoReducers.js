@@ -1,11 +1,18 @@
-function todoReducers(state, action) {
-  if (action.type == "add-todo") {
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  EDIT_TODO,
+  UPDATE_TODO,
+} from "../constants/actions";
+
+function todoReducers(state=[], action) {
+  if (action.type == ADD_TODO) {
     let todoText = action.payload.text;
     return [
       ...state,
       { id: state.length + 1, data: todoText, isFinished: false },
     ];
-  } else if (action.type == "edit-todo") {
+  } else if (action.type == EDIT_TODO) {
     let id = action.payload.id;
     let text = action.payload.text;
     let newTodos = state.map((todo) => {
@@ -16,11 +23,11 @@ function todoReducers(state, action) {
       }
     });
     return newTodos;
-  } else if (action.type == "delete-todo") {
+  } else if (action.type == DELETE_TODO) {
     let id = action.payload.id;
     const updatedList = state.filter((todo) => todo.id != id);
     return updatedList;
-  } else if (action.type == "update-todo") {
+  } else if (action.type == UPDATE_TODO) {
     let id = action.payload.id;
     let isFinished = action.payload.isFinished;
     const updatedList = state.map((todo) => {

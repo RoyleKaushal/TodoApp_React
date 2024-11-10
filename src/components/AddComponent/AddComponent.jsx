@@ -1,14 +1,11 @@
-import { useContext, useState } from "react";
-import { TodoContext } from "../../context/TodoContext";
-import { TodoDispatchContext } from "../../context/TodoDispatchContext";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-function AddComponent() {
+function AddComponent({ addTodo }) {
   const [newTodo, setNewTodo] = useState("");
-  const { list } = useContext(TodoContext);
-  const { dispatch } = useContext(TodoDispatchContext);
   function onAdd() {
     if (newTodo.length < 1) return;
-    dispatch({ type: "add-todo", payload: { text: newTodo } });
+    addTodo(newTodo);
     setNewTodo("");
   }
   return (
