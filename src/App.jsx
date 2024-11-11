@@ -24,8 +24,12 @@ function App() {
 
   return (
     <>
-      <AddComponent addTodo={(data)=>actions.addTodo(data)}/>
-      <TodoList />
+      <AddComponent addTodo={(data) => actions.addTodo(data)} />
+      <TodoList
+        deleteTodo={(data) => actions.deleteTodo(data)}
+        editTodo={(data) => actions.editTodo(data)}
+        finishTodo={(data) => actions.finishedTodo(data)}
+      />
     </>
   );
 }
